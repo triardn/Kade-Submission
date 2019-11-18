@@ -1,8 +1,9 @@
 package com.triardn.kadesubmission
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Gravity
+import com.triardn.kadesubmission.model.Item
 import org.jetbrains.anko.*
 
 class DetailLeagueActivity : AppCompatActivity() {
@@ -12,9 +13,9 @@ class DetailLeagueActivity : AppCompatActivity() {
         val league = intent.getParcelableExtra<Item>("league")
 
         val actionbar = supportActionBar
-        actionbar!!.title = league.name
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar?.title = league.name
+        actionbar?.setDisplayHomeAsUpEnabled(true)
+        actionbar?.setDisplayHomeAsUpEnabled(true)
 
         DetailLeagueActivityUI(league).setContentView(this)
     }
@@ -39,7 +40,7 @@ class DetailLeagueActivity : AppCompatActivity() {
                     }
 
                     textView{
-                        text = item.desc
+                        text = item.id.toString()
                         padding = dip(10)
                     }
                 }

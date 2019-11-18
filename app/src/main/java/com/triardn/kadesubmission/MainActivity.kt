@@ -1,9 +1,10 @@
 package com.triardn.kadesubmission
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.triardn.kadesubmission.model.Item
 import org.jetbrains.anko.intentFor
 
 class MainActivity : AppCompatActivity() {
@@ -23,13 +24,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData(){
+        val id = resources.getIntArray(R.array.league_id)
         val name = resources.getStringArray(R.array.league_name)
         val image = resources.obtainTypedArray(R.array.league_image)
-        val desc = resources.getStringArray(R.array.league_desc)
         items.clear()
         for (i in name.indices) {
-            items.add(Item(name[i],
-                image.getResourceId(i, 0), desc[i]))
+            items.add(
+                Item(
+                    id[i], name[i],
+                    image.getResourceId(i, 0)
+                )
+            )
         }
 
         //Recycle the typed array
