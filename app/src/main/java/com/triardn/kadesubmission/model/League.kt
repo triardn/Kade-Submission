@@ -1,7 +1,10 @@
 package com.triardn.kadesubmission.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class League(
     @SerializedName("idLeague")
     var idLeague: String? = null,
@@ -16,5 +19,8 @@ data class League(
     var strBadge: String? = null,
 
     @SerializedName("strDescriptionEN")
-    var strDescriptionEN: String? = null
-)
+    var strDescriptionEN: String? = null,
+
+    @SerializedName("strTrophy")
+    var strTrophy: String? = null
+) : Parcelable

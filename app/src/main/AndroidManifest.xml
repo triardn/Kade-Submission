@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.triardn.kadesubmission.DetailLeagueActivity"></activity>
+        <activity android:name="com.triardn.kadesubmission.MatchScheduleActivity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.triardn.kadesubmission
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Gravity
@@ -11,6 +12,7 @@ import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.view.DetailView
 import org.jetbrains.anko.*
 import com.bumptech.glide.Glide
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class DetailLeagueActivity : AppCompatActivity(), DetailView {
     private lateinit var leagueDetailPresenter: DetailPresenter
@@ -47,6 +49,13 @@ class DetailLeagueActivity : AppCompatActivity(), DetailView {
                         .load(item.strBadge)
                         .override(300, 300)
                         .into(img)
+
+                    button("Match Schedule") {
+                        onClick {
+                            val intent = Intent(this@with.ctx, MatchScheduleActivity::class.java).apply { putExtra("EXTRA_ITEM", item) }
+                                this@with.ctx.startActivity(intent)
+                        }
+                    }
 
                     textView {
                         text = item.strLeague
