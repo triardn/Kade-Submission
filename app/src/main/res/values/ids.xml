@@ -2,4 +2,5 @@
 <resources>
     <item name="league_badge" type="id" />
     <item name="league_name" type="id" />
+    <item name="team_name" type="id" />
 </resources>
