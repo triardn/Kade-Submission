@@ -19,6 +19,7 @@
         </activity>
         <activity android:name="com.triardn.kadesubmission.DetailLeagueActivity"></activity>
         <activity android:name="com.triardn.kadesubmission.MatchScheduleActivity"></activity>
+        <activity android:name="com.triardn.kadesubmission.DetailMatchActivity"></activity>
     </application>
 
 </manifest>

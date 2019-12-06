@@ -1,7 +1,6 @@
 package com.triardn.kadesubmission.presenter
 
 import com.google.gson.Gson
-import com.triardn.kadesubmission.model.League
 import com.triardn.kadesubmission.model.LeagueResponse
 import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.repository.TheSportsDBApi

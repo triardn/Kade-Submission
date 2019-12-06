@@ -7,15 +7,26 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.triardn.kadesubmission.fragment.NextMatchFragment
 import com.triardn.kadesubmission.fragment.PreviousMatchFragment
+import com.triardn.kadesubmission.model.Item
+import com.triardn.kadesubmission.model.League
 import kotlinx.android.synthetic.main.activity_match_schedule.*
 
 class MatchScheduleActivity : AppCompatActivity() {
+    var leagueID = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match_schedule)
 
+        val league = intent.getParcelableExtra<League>("EXTRA_ITEM")
+
+        val actionbar = supportActionBar
+        actionbar?.title = league?.strLeague
+        actionbar?.setDisplayHomeAsUpEnabled(true)
+
         val fragments = mutableListOf<Fragment>()
         val titles = mutableListOf<String>()
+        leagueID = league?.idLeague.orEmpty()
+
         fragments.add(PreviousMatchFragment())
         titles.add("Previous Matches")
         fragments.add(NextMatchFragment())
@@ -35,6 +46,11 @@ class MatchScheduleActivity : AppCompatActivity() {
         override fun getCount() = fragments.size
 
         override fun getPageTitle(position: Int) = titles[position]
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
 

@@ -2,8 +2,11 @@ package com.triardn.kadesubmission
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.triardn.kadesubmission.model.Item
 import com.triardn.kadesubmission.model.League
@@ -11,8 +14,8 @@ import com.triardn.kadesubmission.presenter.DetailPresenter
 import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.view.DetailView
 import org.jetbrains.anko.*
-import com.bumptech.glide.Glide
 import org.jetbrains.anko.sdk27.coroutines.onClick
+
 
 class DetailLeagueActivity : AppCompatActivity(), DetailView {
     private lateinit var leagueDetailPresenter: DetailPresenter
@@ -24,7 +27,6 @@ class DetailLeagueActivity : AppCompatActivity(), DetailView {
 
         val actionbar = supportActionBar
         actionbar?.title = league?.name
-        actionbar?.setDisplayHomeAsUpEnabled(true)
         actionbar?.setDisplayHomeAsUpEnabled(true)
 
         val request = ApiRepository()
@@ -80,5 +82,20 @@ class DetailLeagueActivity : AppCompatActivity(), DetailView {
 
     override fun getDetailLeague(data: League) {
         DetailLeagueActivityUI(data).setContentView(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.action_search_menu -> {
+                // fragment = SearchFragment()
+                // loadFragment(fragment)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -1,34 +1,51 @@
 package com.triardn.kadesubmission.adapter
 
+import android.provider.CalendarContract.Instances.EVENT_ID
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.triardn.kadesubmission.DetailMatchActivity
+import com.triardn.kadesubmission.MainActivity
 import com.triardn.kadesubmission.R
 import com.triardn.kadesubmission.model.Schedule
 import org.jetbrains.anko.*
+import org.jetbrains.anko.cardview.v7.cardView
+import org.jetbrains.anko.constraint.layout.constraintLayout
 
 class ScheduleAdapter (private val schedules: List<Schedule>) : RecyclerView.Adapter<ScheduleViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return ScheduleViewHolder(ScheduleUI().createView(AnkoContext.create(parent.context, parent)))
     }
 
-    override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getItemCount(): Int = schedules.size
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        holder.bindItem(schedules[position])
+
+        holder.itemView.setOnClickListener {
+            holder.itemView.context.startActivity<DetailMatchActivity>("matchId" to schedules[position].idEvent)
+        }
     }
 
 }
 
 class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val teamName: TextView = view.find(R.id.team_name)
+    private val matchTitle: TextView = view.find(R.id.match_title)
+    private val homeTeamScore: TextView = view.find(R.id.home_team_score)
+    private val awayTeamScore: TextView = view.find(R.id.away_team_score)
+    private val matchDate: TextView = view.find(R.id.match_date)
+    private val matchTime: TextView = view.find(R.id.match_time)
 
-    fun bindItem(schedules: Schedule) {
-
+    fun bindItem(schedule: Schedule) {
+        matchTitle.text = schedule.strEvent
+        homeTeamScore.text = schedule.intHomeScore
+        awayTeamScore.text = schedule.intAwayScore
+        matchDate.text = schedule.strDate
+        matchTime.text = schedule.strTime
     }
 }
 
@@ -37,14 +54,88 @@ class ScheduleUI : AnkoComponent<ViewGroup> {
         return with(ui) {
             linearLayout {
                 lparams(width = matchParent, height = wrapContent)
-                padding = dip(16)
-                orientation = LinearLayout.HORIZONTAL
+                padding = dip(8)
 
-                textView {
-                    id = R.id.team_name
-                    textSize = 16f
-                }.lparams {
-                    margin = dip(15)
+                cardView {
+                    lparams(width = matchParent, height = wrapContent)
+                    padding = dip(16)
+
+                    linearLayout {
+                        lparams(width = matchParent, height = wrapContent)
+                        orientation = LinearLayout.VERTICAL
+                        gravity = Gravity.CENTER
+
+                        textView {
+                            textSize = 20f
+                            id = R.id.match_title
+                            text = resources.getString(R.string.no_goal)
+                            textAlignment = View.TEXT_ALIGNMENT_CENTER
+                        }.lparams {
+                            marginEnd = dip(8)
+                        }
+
+                        constraintLayout {
+                            lparams(width = matchParent, height = wrapContent)
+                            padding = dip(8)
+                            id = R.id.match_item
+
+                            textView {
+                                textSize = 20f
+                                id = R.id.home_team_score
+                                text = resources.getString(R.string.no_goal)
+                                textAlignment = View.TEXT_ALIGNMENT_CENTER
+                            }.lparams {
+                                topToTop = R.id.match_item
+                                endToStart = R.id.versus
+                                marginEnd = dip(8)
+                            }
+
+                            textView {
+                                id = R.id.versus
+                                textSize = 14f
+                                text = resources.getString(R.string.versus)
+                                textAlignment = View.TEXT_ALIGNMENT_CENTER
+                            }.lparams {
+                                topToTop = R.id.match_item
+                                startToStart = R.id.match_item
+                                endToEnd = R.id.match_item
+                            }
+
+                            textView {
+                                textSize = 20f
+                                id = R.id.away_team_score
+                                text = resources.getString(R.string.no_goal)
+                                textAlignment = View.TEXT_ALIGNMENT_CENTER
+                            }.lparams {
+                                topToTop = R.id.match_item
+                                startToEnd = R.id.versus
+                                marginStart = dip(8)
+                            }
+                        }
+
+                        constraintLayout {
+                            textView {
+                                id = R.id.match_date
+                                textSize = 14f
+                                gravity = Gravity.CENTER_HORIZONTAL
+                            }.lparams {
+                                width = matchParent
+                                height = wrapContent
+                                topToTop = R.id.match_item
+                                endToStart = R.id.match_time
+                            }
+                            textView {
+                                id = R.id.match_time
+                                textSize = 12f
+                                gravity = Gravity.CENTER_HORIZONTAL
+                            }.lparams {
+                                width = matchParent
+                                height = wrapContent
+                                topToTop = R.id.match_item
+                                startToEnd = R.id.match_date
+                            }
+                        }
+                    }
                 }
             }
         }
