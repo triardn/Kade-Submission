@@ -12,4 +12,7 @@
     <item name="match_title" type="id" />
     <item name="match_date" type="id" />
     <item name="match_time" type="id" />
+    <item name="badge_section" type="id" />
+    <item name="team_title" type="id" />
+    <item name="match_score" type="id" />
 </resources>

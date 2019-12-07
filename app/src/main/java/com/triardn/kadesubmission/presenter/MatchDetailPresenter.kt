@@ -1,7 +1,8 @@
 package com.triardn.kadesubmission.presenter
 
 import com.google.gson.Gson
-import com.triardn.kadesubmission.model.ScheduleResponse
+import com.triardn.kadesubmission.model.Schedule
+import com.triardn.kadesubmission.model.TeamResponse
 import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.repository.TheSportsDBApi
 import com.triardn.kadesubmission.view.MatchDetailView
@@ -11,14 +12,17 @@ import org.jetbrains.anko.uiThread
 class MatchDetailPresenter(private val view: MatchDetailView,
                            private val api: ApiRepository,
                            private val gson: Gson) {
-    fun getMatchDetail(matchID: String) {
+    fun getTeamDetail(matchDetail: Schedule) {
         doAsync {
-            val data = gson.fromJson(api.doRequest(TheSportsDBApi.getMatchDetail(matchID)),
-                ScheduleResponse::class.java
+            val homeTeam = gson.fromJson(api.doRequest(TheSportsDBApi.getTeamDetail(matchDetail.idHomeTeam.orEmpty())),
+                TeamResponse::class.java
             )
 
+            val awayTeam = gson.fromJson(api.doRequest(TheSportsDBApi.getTeamDetail(matchDetail.idAwayTeam.orEmpty())),
+                TeamResponse::class.java)
+
             uiThread {
-                view.getMatchDetail(data.schedules[0])
+                view.getMatchDetail(matchDetail, homeTeam.teams[0], awayTeam.teams[0])
             }
         }
     }

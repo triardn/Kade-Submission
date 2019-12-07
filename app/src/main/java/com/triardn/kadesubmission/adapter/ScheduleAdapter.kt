@@ -1,5 +1,7 @@
 package com.triardn.kadesubmission.adapter
 
+import android.content.Intent
+import android.os.Bundle
 import android.provider.CalendarContract.Instances.EVENT_ID
 import android.view.Gravity
 import android.view.View
@@ -27,7 +29,16 @@ class ScheduleAdapter (private val schedules: List<Schedule>) : RecyclerView.Ada
         holder.bindItem(schedules[position])
 
         holder.itemView.setOnClickListener {
-            holder.itemView.context.startActivity<DetailMatchActivity>("matchId" to schedules[position].idEvent)
+            holder.itemView.context.startActivity<DetailMatchActivity>("event" to schedules[position])
+
+            val intent = Intent(holder.itemView.context, DetailMatchActivity::class.java)
+            val bundle = Bundle()
+            val parcel = Schedule(schedules[position].idEvent, schedules[position].strEvent, schedules[position].idHomeTeam, schedules[position].idAwayTeam, schedules[position].intHomeScore, schedules[position].intAwayScore, schedules[position].strDate, schedules[position].strTime, schedules[position].strHomeGoalDetails, schedules[position].strAwayGoalDetails, schedules[position].strHomeYellowCards, schedules[position].strAwayYellowCards)
+
+
+            bundle.putParcelable("match", parcel)
+            intent.putExtra("Bundle", bundle)
+            holder.itemView.context.startActivity(intent)
         }
     }
 

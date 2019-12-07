@@ -3,6 +3,7 @@
     <string name="no_goal">0</string>
     <string name="versus">VS</string>
     <string name="search">search</string>
+    <string name="match_detail">Match Detail</string>
     <string-array name="league_name">
         <item>English Premier League</item>
         <item>Spanish La Liga</item>
