@@ -1,15 +1,19 @@
 package com.triardn.kadesubmission
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.triardn.kadesubmission.fragment.NextMatchFragment
 import com.triardn.kadesubmission.fragment.PreviousMatchFragment
-import com.triardn.kadesubmission.model.Item
 import com.triardn.kadesubmission.model.League
 import kotlinx.android.synthetic.main.activity_match_schedule.*
+import org.jetbrains.anko.startActivity
+
 
 class MatchScheduleActivity : AppCompatActivity() {
     var leagueID = ""
@@ -51,6 +55,22 @@ class MatchScheduleActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_search_menu -> {
+                Log.ERROR
+                startActivity<SearchActivity>()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
 

@@ -17,6 +17,7 @@ import com.triardn.kadesubmission.model.Schedule
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout
+import org.jetbrains.anko.design.tabLayout
 
 class ScheduleAdapter (private val schedules: List<Schedule>) : RecyclerView.Adapter<ScheduleViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
@@ -29,8 +30,6 @@ class ScheduleAdapter (private val schedules: List<Schedule>) : RecyclerView.Ada
         holder.bindItem(schedules[position])
 
         holder.itemView.setOnClickListener {
-            holder.itemView.context.startActivity<DetailMatchActivity>("event" to schedules[position])
-
             val intent = Intent(holder.itemView.context, DetailMatchActivity::class.java)
             val bundle = Bundle()
             val parcel = Schedule(schedules[position].idEvent, schedules[position].strEvent, schedules[position].idHomeTeam, schedules[position].idAwayTeam, schedules[position].intHomeScore, schedules[position].intAwayScore, schedules[position].strDate, schedules[position].strTime, schedules[position].strHomeGoalDetails, schedules[position].strAwayGoalDetails, schedules[position].strHomeYellowCards, schedules[position].strAwayYellowCards)
@@ -55,8 +54,8 @@ class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         matchTitle.text = schedule.strEvent
         homeTeamScore.text = schedule.intHomeScore
         awayTeamScore.text = schedule.intAwayScore
-        matchDate.text = schedule.strDate
-        matchTime.text = schedule.strTime
+        matchDate.text = "Date: " + schedule.strDate
+        matchTime.text = "Time: " + schedule.strTime
     }
 }
 
@@ -124,32 +123,46 @@ class ScheduleUI : AnkoComponent<ViewGroup> {
                             }
                         }
 
-                        constraintLayout {
-                            textView {
-                                id = R.id.match_date
-                                textSize = 14f
-                                gravity = Gravity.CENTER_HORIZONTAL
-                            }.lparams {
-                                width = matchParent
-                                height = wrapContent
-                                topToTop = R.id.match_item
-                                endToStart = R.id.match_time
+                        tableLayout {
+                            tableRow {
+                                textView {
+                                    id = R.id.match_date
+                                    textSize = 14f
+                                    gravity = Gravity.CENTER_HORIZONTAL
+                                }.lparams {
+                                    width = matchParent
+                                    height = wrapContent
+                                    rightMargin = dip(10)
+                                    leftMargin = dip(30)
+                                }
+                                textView {
+                                    id = R.id.match_date
+                                    textSize = 14f
+                                    gravity = Gravity.CENTER_HORIZONTAL
+                                    text = "-"
+                                }.lparams {
+                                    width = matchParent
+                                    height = wrapContent
+                                    rightMargin = dip(5)
+                                    leftMargin = dip(5)
+                                }
+                                textView {
+                                    id = R.id.match_time
+                                    textSize = 12f
+                                    gravity = Gravity.CENTER_HORIZONTAL
+                                }.lparams {
+                                    width = matchParent
+                                    height = wrapContent
+                                    rightMargin = dip(30)
+                                    leftMargin = dip(10)
+                                }
                             }
-                            textView {
-                                id = R.id.match_time
-                                textSize = 12f
-                                gravity = Gravity.CENTER_HORIZONTAL
-                            }.lparams {
-                                width = matchParent
-                                height = wrapContent
-                                topToTop = R.id.match_item
-                                startToEnd = R.id.match_date
-                            }
+                        }.lparams{
+                            gravity = Gravity.CENTER_HORIZONTAL
                         }
                     }
                 }
             }
         }
     }
-
 }

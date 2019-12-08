@@ -31,8 +31,10 @@ class DetailMatchActivity: AppCompatActivity(), MatchDetailView {
         val bundle = intent.getBundleExtra("Bundle")
         val event = bundle?.getParcelable<Schedule>("match")
 
-        matchDetailPresenter = MatchDetailPresenter(this, request, gson)
-        matchDetailPresenter.getTeamDetail(event!!)
+        if (event != null) {
+            matchDetailPresenter = MatchDetailPresenter(this, request, gson)
+            matchDetailPresenter.getTeamDetail(event)
+        }
     }
 
     class MatchDetailActivityUI(var homeTeam: Team, var awayTeam: Team, var match: Schedule) : AnkoComponent<DetailMatchActivity> {

@@ -4,6 +4,8 @@
     <string name="versus">VS</string>
     <string name="search">search</string>
     <string name="match_detail">Match Detail</string>
+    <string name="search_placeholder">man united vs arsenal</string>
+    <string name="search_hint">man united vs arsenal</string>
     <string-array name="league_name">
         <item>English Premier League</item>
         <item>Spanish La Liga</item>

@@ -83,19 +83,4 @@ class DetailLeagueActivity : AppCompatActivity(), DetailView {
     override fun getDetailLeague(data: League) {
         DetailLeagueActivityUI(data).setContentView(this)
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
-            R.id.action_search_menu -> {
-                // fragment = SearchFragment()
-                // loadFragment(fragment)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }
