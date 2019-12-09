@@ -35,8 +35,11 @@ class SchedulePresenter(private val view: ScheduleView,
     fun searchMatch(query: String?) {
         doAsync {
             val data = gson.fromJson(apiRepository.doRequest(TheSportsDBApi.searchMatch(query.orEmpty())), SearchResponse::class.java)
-            uiThread {
-                view.showLeagueMatches(data.schedules)
+
+            if (data.schedules != null) {
+                view.showLeagueMatches(data.schedules.filter { it.strSport == "soccer" })
+            } else {
+                view.showLeagueMatches(null)
             }
         }
     }

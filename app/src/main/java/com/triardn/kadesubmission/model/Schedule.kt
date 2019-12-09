@@ -40,5 +40,8 @@ data class Schedule(
     var strHomeYellowCards: String? = null,
 
     @SerializedName("strAwayYellowCards")
-    var strAwayYellowCards: String? = null
+    var strAwayYellowCards: String? = null,
+
+    @SerializedName("strSport")
+    var strSport: String? = null
 ) : Parcelable

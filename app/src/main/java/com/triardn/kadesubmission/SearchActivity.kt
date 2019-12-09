@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -13,7 +14,6 @@ import com.triardn.kadesubmission.presenter.SchedulePresenter
 import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.view.ScheduleView
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlin.math.log
 
 class SearchActivity: AppCompatActivity(), ScheduleView, View.OnClickListener {
     private lateinit var presenter: SchedulePresenter
@@ -49,12 +49,6 @@ class SearchActivity: AppCompatActivity(), ScheduleView, View.OnClickListener {
         return true
     }
 
-    override fun showLeagueMatches(data: List<Schedule>) {
-        schedules.clear()
-        schedules.addAll(data)
-        adapter.notifyDataSetChanged()
-    }
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btn_search -> {
@@ -69,26 +63,13 @@ class SearchActivity: AppCompatActivity(), ScheduleView, View.OnClickListener {
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.main_menu, menu)
-//
-//        val searchMenu = menu.findItem(R.id.action_search_menu)
-//        searchMenu.expandActionView()
-//        searchView = searchMenu.actionView as SearchView
-//        searchView.queryHint = "cari dulu dong"
-//
-//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                presenter.searchMatch(query.toString().replace(" ", "_"))
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                presenter.searchMatch(newText.toString().replace(" ", "_"))
-//                return true
-//            }
-//        })
-//
-//        return true
-//    }
+    override fun showLeagueMatches(data: List<Schedule>?) {
+        if (data != null) {
+            schedules.clear()
+            schedules.addAll(data)
+            adapter.notifyDataSetChanged()
+        } else {
+            Toast.makeText(this, "Match schedule not found", Toast.LENGTH_LONG).show()
+        }
+    }
 }
