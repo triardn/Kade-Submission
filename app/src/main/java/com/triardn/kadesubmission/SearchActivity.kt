@@ -14,14 +14,14 @@ import com.triardn.kadesubmission.presenter.SchedulePresenter
 import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.view.ScheduleView
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlin.math.log
 
 class SearchActivity: AppCompatActivity(), ScheduleView, View.OnClickListener {
     private lateinit var presenter: SchedulePresenter
     private var schedules: MutableList<Schedule> = mutableListOf()
     private lateinit var adapter: ScheduleAdapter
-    private lateinit var searchView: SearchView
 
-    var query: String? = "manchester united"
+    var query: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +36,10 @@ class SearchActivity: AppCompatActivity(), ScheduleView, View.OnClickListener {
         schedule_list.layoutManager = LinearLayoutManager(this.applicationContext)
 
         btn_search.setOnClickListener(this)
-        val query = search_query.text.toString()
 
         val apiRepository = ApiRepository()
         val gson = Gson()
         presenter = SchedulePresenter(this, apiRepository, gson)
-        presenter.searchMatch(query.replace(" ", "_"))
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -49,10 +47,21 @@ class SearchActivity: AppCompatActivity(), ScheduleView, View.OnClickListener {
         return true
     }
 
+    override fun showLeagueMatches(data: List<Schedule>) {
+        schedules.clear()
+
+        if (data.isNotEmpty()) {
+            schedules.addAll(data)
+        } else {
+            Toast.makeText(this, "Match schedule not found", Toast.LENGTH_SHORT).show()
+        }
+
+        adapter.notifyDataSetChanged()
+    }
+
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btn_search -> {
-                println("clicked")
                 query = search_query.text.toString()
                 if (TextUtils.isEmpty(query)) {
                     return
@@ -60,16 +69,6 @@ class SearchActivity: AppCompatActivity(), ScheduleView, View.OnClickListener {
 
                 presenter.searchMatch(query.toString().replace(" ", "_"))
             }
-        }
-    }
-
-    override fun showLeagueMatches(data: List<Schedule>?) {
-        if (data != null) {
-            schedules.clear()
-            schedules.addAll(data)
-            adapter.notifyDataSetChanged()
-        } else {
-            Toast.makeText(this, "Match schedule not found", Toast.LENGTH_LONG).show()
         }
     }
 }

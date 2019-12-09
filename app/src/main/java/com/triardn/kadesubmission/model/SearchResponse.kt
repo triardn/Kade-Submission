@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class SearchResponse(
     @SerializedName("event")
-    val schedules: List<Schedule>
+    val schedules: List<Schedule>?
 )

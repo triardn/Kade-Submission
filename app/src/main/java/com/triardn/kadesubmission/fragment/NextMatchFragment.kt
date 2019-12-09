@@ -2,7 +2,6 @@ package com.triardn.kadesubmission.fragment
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -40,13 +39,9 @@ class NextMatchFragment : Fragment(), ScheduleView {
         presenter.getNextMatches((activity as MatchScheduleActivity?)?.leagueID?.toInt())
     }
 
-    override fun showLeagueMatches(data: List<Schedule>?) {
-        if (data != null) {
-            schedules.clear()
-            schedules.addAll(data)
-            adapter.notifyDataSetChanged()
-        } else {
-            Toast.makeText(this.context, "Match schedule not found", Toast.LENGTH_LONG).show()
-        }
+    override fun showLeagueMatches(data: List<Schedule>) {
+        schedules.clear()
+        schedules.addAll(data)
+        adapter.notifyDataSetChanged()
     }
 }
