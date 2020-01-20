@@ -2,37 +2,34 @@ package com.triardn.kadesubmission.adapter
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.CalendarContract.Instances.EVENT_ID
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.triardn.kadesubmission.DetailMatchActivity
-import com.triardn.kadesubmission.MainActivity
 import com.triardn.kadesubmission.R
+import com.triardn.kadesubmission.model.Favorite
 import com.triardn.kadesubmission.model.Schedule
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout
-import org.jetbrains.anko.design.tabLayout
 
-class ScheduleAdapter (private val schedules: List<Schedule>) : RecyclerView.Adapter<ScheduleViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
-        return ScheduleViewHolder(ScheduleUI().createView(AnkoContext.create(parent.context, parent)))
+class FavoriteMatchAdapter(private val favorite: List<Favorite>, private val listener: (Favorite) -> Unit)
+    : RecyclerView.Adapter<FavoriteViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
+        return FavoriteViewHolder(FavMatchUI().createView(AnkoContext.create(parent.context, parent)))
     }
 
-    override fun getItemCount(): Int = schedules.size
-
-    override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
-        holder.bindItem(schedules[position])
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+        holder.bindItem(favorite[position], listener)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailMatchActivity::class.java)
             val bundle = Bundle()
-            val parcel = Schedule(schedules[position].idEvent, schedules[position].strEvent, schedules[position].idHomeTeam, schedules[position].idAwayTeam, schedules[position].intHomeScore, schedules[position].intAwayScore, schedules[position].strDate, schedules[position].strTime, schedules[position].strHomeGoalDetails, schedules[position].strAwayGoalDetails, schedules[position].strHomeYellowCards, schedules[position].strAwayYellowCards)
+            val parcel = Schedule(favorite[position].idEvent, favorite[position].strEvent, favorite[position].idHomeTeam, favorite[position].idAwayTeam, favorite[position].intHomeScore, favorite[position].intAwayScore, favorite[position].strDate, favorite[position].strTime, favorite[position].strHomeGoalDetails, favorite[position].strAwayGoalDetails, favorite[position].strHomeYellowCards, favorite[position].strAwayYellowCards)
 
             bundle.putParcelable("match", parcel)
             intent.putExtra("Bundle", bundle)
@@ -40,25 +37,11 @@ class ScheduleAdapter (private val schedules: List<Schedule>) : RecyclerView.Ada
         }
     }
 
+    override fun getItemCount(): Int = favorite.size
+
 }
 
-class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val matchTitle: TextView = view.find(R.id.match_title)
-    private val homeTeamScore: TextView = view.find(R.id.home_team_score)
-    private val awayTeamScore: TextView = view.find(R.id.away_team_score)
-    private val matchDate: TextView = view.find(R.id.match_date)
-    private val matchTime: TextView = view.find(R.id.match_time)
-
-    fun bindItem(schedule: Schedule) {
-        matchTitle.text = schedule.strEvent
-        homeTeamScore.text = schedule.intHomeScore
-        awayTeamScore.text = schedule.intAwayScore
-        matchDate.text = "Date: " + schedule.strDate
-        matchTime.text = "Time: " + schedule.strTime
-    }
-}
-
-class ScheduleUI : AnkoComponent<ViewGroup> {
+class FavMatchUI : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
             linearLayout {
@@ -163,5 +146,22 @@ class ScheduleUI : AnkoComponent<ViewGroup> {
                 }
             }
         }
+    }
+}
+
+class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view){
+    private val matchTitle: TextView = view.find(R.id.match_title)
+    private val homeTeamScore: TextView = view.find(R.id.home_team_score)
+    private val awayTeamScore: TextView = view.find(R.id.away_team_score)
+    private val matchDate: TextView = view.find(R.id.match_date)
+    private val matchTime: TextView = view.find(R.id.match_time)
+
+    fun bindItem(favorite: Favorite, listener: (Favorite) -> Unit) {
+        matchTitle.text = favorite.strEvent
+        homeTeamScore.text = favorite.intHomeScore
+        awayTeamScore.text = favorite.intAwayScore
+        matchDate.text = "Date: " + favorite.strDate
+        matchTime.text = "Time: " + favorite.strTime
+        itemView.setOnClickListener { listener(favorite) }
     }
 }

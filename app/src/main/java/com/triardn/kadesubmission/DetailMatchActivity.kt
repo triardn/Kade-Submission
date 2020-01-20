@@ -1,12 +1,18 @@
 package com.triardn.kadesubmission
 
+import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.triardn.kadesubmission.model.Favorite
 import com.triardn.kadesubmission.model.Schedule
 import com.triardn.kadesubmission.model.Team
 import com.triardn.kadesubmission.presenter.MatchDetailPresenter
@@ -14,12 +20,26 @@ import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.view.MatchDetailView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.constraintLayout
-import org.jetbrains.anko.custom.style
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
+
 
 class DetailMatchActivity: AppCompatActivity(), MatchDetailView {
     private lateinit var matchDetailPresenter: MatchDetailPresenter
+    private var match: Schedule? = null
+    private lateinit var id: String
+    private var isFavoriteFlag: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val bundle = intent.getBundleExtra("Bundle")
+        val event = bundle?.getParcelable<Schedule>("match")
+
+        // isFavoriteFlag = isFavorite(event?.idEvent.orEmpty())
+        isFavorite(event?.idEvent.orEmpty())
 
         val actionbar = supportActionBar
         actionbar?.title = "Match Detail"
@@ -27,9 +47,6 @@ class DetailMatchActivity: AppCompatActivity(), MatchDetailView {
 
         val request = ApiRepository()
         val gson = Gson()
-
-        val bundle = intent.getBundleExtra("Bundle")
-        val event = bundle?.getParcelable<Schedule>("match")
 
         if (event != null) {
             matchDetailPresenter = MatchDetailPresenter(this, request, gson)
@@ -277,6 +294,125 @@ class DetailMatchActivity: AppCompatActivity(), MatchDetailView {
     }
 
     override fun getMatchDetail(matchDetail: Schedule, homeTeam: Team, awayTeam: Team) {
+        match = matchDetail
+        id = match?.idEvent.orEmpty()
         MatchDetailActivityUI(homeTeam, awayTeam, matchDetail).setContentView(this)
     }
+
+    private var menuItem: Menu? = null
+
+    private fun isFavorite(id: String) {
+        database.use {
+            val result = select(Favorite.TABLE_FAVORITE).whereArgs(
+                "(ID_EVENT = {idEvent})",
+                "idEvent" to id
+            )
+            val favoriteMatch = result.parseList(classParser<Favorite>())
+
+            if (favoriteMatch.isNotEmpty()) isFavoriteFlag = true
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        menuItem = menu
+
+        if (isFavoriteFlag) {
+            menu?.getItem(0)?.setIcon(R.drawable.ic_added_to_favorites)
+        } else {
+            menu?.getItem(0)?.setIcon(R.drawable.ic_add_to_favorites)
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            R.id.add_to_favorite -> {
+                if (isFavoriteFlag) {
+                    if(removeFromFavorite()) {
+                        isFavoriteFlag = !isFavoriteFlag
+                        setFavorite()
+                    }
+                } else {
+                    if(addToFavorite()) {
+                        isFavoriteFlag = !isFavoriteFlag
+                        setFavorite()
+                    }
+                }
+
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun addToFavorite(): Boolean {
+        match?.let {
+            try {
+                database.use {
+                    insert(Favorite.TABLE_FAVORITE,
+                        Favorite.ID_EVENT to match?.idEvent,
+                        Favorite.STR_EVENT to match?.strEvent,
+                        Favorite.EVENT_DATE to match?.strDate,
+                        Favorite.EVENT_TIME to match?.strTime,
+                        Favorite.HOME_TEAM_ID to match?.idHomeTeam,
+                        Favorite.AWAY_TEAM_ID to match?.idAwayTeam,
+                        Favorite.HOME_TEAM_SCORE to match?.intHomeScore,
+                        Favorite.AWAY_TEAM_SCORE to match?.intAwayScore,
+                        Favorite.HOME_TEAM_GOAL_DETAILS to match?.strHomeGoalDetails,
+                        Favorite.AWAY_TEAM_GOAL_DETAILS to match?.strAwayGoalDetails,
+                        Favorite.HOME_TEAM_YELLOW_CARDS to match?.strHomeYellowCards,
+                        Favorite.AWAY_TEAM_YELLOW_CARDS to match?.strAwayYellowCards
+                    )
+                }
+                Toast.makeText(this, "Added to favorit", Toast.LENGTH_SHORT).show()
+
+                return true
+            } catch (e: SQLiteConstraintException){
+                println(e.localizedMessage)
+                return false
+            }
+        }
+
+        Toast.makeText(this, "Wait until data loaded before you add to favorite", Toast.LENGTH_SHORT).show()
+
+        return false
+    }
+
+    private fun removeFromFavorite(): Boolean{
+        match?.let {
+            try {
+                database.use {
+                    delete(Favorite.TABLE_FAVORITE, "(ID_EVENT = {id})",
+                        "id" to id)
+                }
+                Toast.makeText(this, "Removed to favorite", Toast.LENGTH_SHORT).show()
+
+                return true
+            } catch (e: SQLiteConstraintException){
+                println(e.localizedMessage)
+                return false
+            }
+        }
+
+        Toast.makeText(this, "Wait until data loaded before you remove from favorite", Toast.LENGTH_SHORT).show()
+
+        return false
+    }
+
+    private fun setFavorite() {
+        if (isFavoriteFlag)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_to_favorites)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_favorites)
+    }
+
+
 }
