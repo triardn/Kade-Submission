@@ -28,6 +28,9 @@ android {
     androidExtensions {
         experimental = true
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -47,7 +50,15 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:2.2.2") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
 
     // RecyclerView-v7
     implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
@@ -71,4 +82,10 @@ dependencies {
     implementation "org.jetbrains.anko:anko-gridlayout-v7:$anko_version"
 
     implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
+
+    testImplementation 'org.mockito:mockito-core:3.0.0'
+    testImplementation "org.mockito:mockito-inline:3.0.0"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
 }

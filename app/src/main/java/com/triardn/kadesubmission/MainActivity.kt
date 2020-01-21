@@ -17,14 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val list = findViewById<RecyclerView>(R.id.league_list)
-//        initData()
-//
-//        list.layoutManager = LinearLayoutManager(this)
-//        list.adapter = RecyclerViewAdapter(this, items) {
-//            startActivity(intentFor<DetailLeagueActivity>("league" to it))
-//        }
-
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.leagues -> {
@@ -57,22 +49,4 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
     }
-
-//    private fun initData(){
-//        val id = resources.getIntArray(R.array.league_id)
-//        val name = resources.getStringArray(R.array.league_name)
-//        val image = resources.obtainTypedArray(R.array.league_image)
-//        items.clear()
-//        for (i in name.indices) {
-//            items.add(
-//                Item(
-//                    id[i], name[i],
-//                    image.getResourceId(i, 0)
-//                )
-//            )
-//        }
-//
-//        //Recycle the typed array
-//        image.recycle()
-//    }
 }

@@ -5,39 +5,15 @@ import com.triardn.kadesubmission.BuildConfig
 
 object TheSportsDBApi {
     fun getLeague(leagueID: Int?): String {
-        return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-            .appendPath("api")
-            .appendPath("v1")
-            .appendPath("json")
-            .appendPath(BuildConfig.TSDB_API_KEY)
-            .appendPath("lookupleague.php")
-            .appendQueryParameter("id", leagueID.toString())
-            .build()
-            .toString()
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookupleague.php?id=" + leagueID.toString()
     }
 
     fun getPreviousMatches(leagueID: Int?): String {
-        return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-            .appendPath("api")
-            .appendPath("v1")
-            .appendPath("json")
-            .appendPath(BuildConfig.TSDB_API_KEY)
-            .appendPath("eventspastleague.php")
-            .appendQueryParameter("id", leagueID.toString())
-            .build()
-            .toString()
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/eventspastleague.php?id=" + leagueID.toString()
     }
 
     fun getNextMatches(leagueID: Int?): String {
-        return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-            .appendPath("api")
-            .appendPath("v1")
-            .appendPath("json")
-            .appendPath(BuildConfig.TSDB_API_KEY)
-            .appendPath("eventsnextleague.php")
-            .appendQueryParameter("id", leagueID.toString())
-            .build()
-            .toString()
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/eventsnextleague.php?id=" + leagueID.toString()
     }
 
     fun getMatchDetail(matchID: String): String {
@@ -53,26 +29,10 @@ object TheSportsDBApi {
     }
 
     fun getTeamDetail(teamID: String): String {
-        return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-            .appendPath("api")
-            .appendPath("v1")
-            .appendPath("json")
-            .appendPath(BuildConfig.TSDB_API_KEY)
-            .appendPath("lookupteam.php")
-            .appendQueryParameter("id", teamID)
-            .build()
-            .toString()
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookupteam.php?id=" + teamID
     }
 
     fun searchMatch(query: String): String {
-        return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-            .appendPath("api")
-            .appendPath("v1")
-            .appendPath("json")
-            .appendPath(BuildConfig.TSDB_API_KEY)
-            .appendPath("searchevents.php")
-            .appendQueryParameter("e", query)
-            .build()
-            .toString()
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/searchevents.php?id=" + query
     }
 }
