@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="league_badge" type="id" />
+    <item name="league_name" type="id" />
+    <item name="team_name" type="id" />
+    <item name="match_item" type="id" />
+    <item name="home_team_name" type="id" />
+    <item name="home_team_score" type="id" />
+    <item name="versus" type="id" />
+    <item name="away_team_score" type="id" />
+    <item name="away_team_name" type="id" />
+    <item name="match_title" type="id" />
+    <item name="match_date" type="id" />
+    <item name="match_time" type="id" />
+    <item name="badge_section" type="id" />
+    <item name="team_title" type="id" />
+    <item name="match_score" type="id" />
+</resources>

@@ -1,13 +1,14 @@
 package com.triardn.kadesubmission
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import com.triardn.kadesubmission.model.Item
 
 class RecyclerViewAdapter(private val context: Context, private val items: List<Item>, private val listener: (Item) -> Unit)
     : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
@@ -28,7 +29,7 @@ class RecyclerViewAdapter(private val context: Context, private val items: List<
 
         fun bindItem(items: Item, listener: (Item) -> Unit) {
             name.text = items.name
-            items.image?.let { Picasso.get().load(it).into(image) }
+            items.image.let { Picasso.get().load(it).into(image) }
             itemView.setOnClickListener {
                 listener(items)
             }
