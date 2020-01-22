@@ -20,11 +20,26 @@ class SearchMatchTest {
         // search
         onView(withId(R.id.search_query)).check(matches(isDisplayed()))
         onView(withId(R.id.search_query)).perform(click())
+
         onView(withId(R.id.search_query)).perform(typeText("Barcelona"))
+        onView(withId(R.id.btn_search)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_search)).perform(click())
+        onView(withId(R.id.schedule_list)).check(matches(isDisplayed()))
+        onView(withText("Barcelona")).check(matches(isDisplayed()))
         onView(withId(R.id.search_query)).perform(clearText())
+
         onView(withId(R.id.search_query)).perform(typeText("Arsenal"))
+        onView(withId(R.id.btn_search)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_search)).perform(click())
+        onView(withId(R.id.schedule_list)).check(matches(isDisplayed()))
+        onView(withText("Arsenal")).check(matches(isDisplayed()))
         onView(withId(R.id.search_query)).perform(clearText())
+
         onView(withId(R.id.search_query)).perform(typeText("Chelsea"))
+        onView(withId(R.id.btn_search)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_search)).perform(click())
+        onView(withId(R.id.schedule_list)).check(matches(isDisplayed()))
+        onView(withText("Chelsea")).check(matches(isDisplayed()))
         onView(withId(R.id.search_query)).perform(clearText())
     }
 }

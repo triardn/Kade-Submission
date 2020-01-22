@@ -38,7 +38,7 @@ class MatchDetailPresenterTest {
     }
 
     @Test
-    fun getTeamDetail() {
+    fun getTeamDetailTest() {
         val leagues: MutableList<League> = mutableListOf()
         val response = LeagueResponse(leagues)
         val homeTeam: MutableList<Team> = mutableListOf()
