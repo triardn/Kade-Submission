@@ -16,23 +16,23 @@ object TheSportsDBApi {
         return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/eventsnextleague.php?id=" + leagueID.toString()
     }
 
-    fun getMatchDetail(matchID: String): String {
-        return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-            .appendPath("api")
-            .appendPath("v1")
-            .appendPath("json")
-            .appendPath(BuildConfig.TSDB_API_KEY)
-            .appendPath("lookupevent.php")
-            .appendQueryParameter("id", matchID)
-            .build()
-            .toString()
-    }
-
     fun getTeamDetail(teamID: String): String {
         return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookupteam.php?id=" + teamID
     }
 
     fun searchMatch(query: String): String {
         return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/searchevents.php?e=" + query
+    }
+
+    fun getLeagueStandings(leagueID: Int?): String {
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookuptable.php?l=" + leagueID.toString()
+    }
+
+    fun getLeagueTeams(leagueID: Int?): String {
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookup_all_teams.php?id=" + leagueID.toString()
+    }
+
+    fun searchTeam(query: String): String {
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/searchteams.php?t=" + query
     }
 }

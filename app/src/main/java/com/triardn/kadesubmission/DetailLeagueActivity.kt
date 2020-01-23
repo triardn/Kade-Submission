@@ -52,6 +52,13 @@ class DetailLeagueActivity : AppCompatActivity(), DetailView {
                         .override(300, 300)
                         .into(img)
 
+                    button("Club List") {
+                        onClick {
+                            val intent = Intent(this@with.ctx, ClubListActivity::class.java).apply { putExtra("EXTRA_ITEM", item) }
+                            this@with.ctx.startActivity(intent)
+                        }
+                    }
+
                     button("Match Schedule") {
                         onClick {
                             val intent = Intent(this@with.ctx, MatchScheduleActivity::class.java).apply { putExtra("EXTRA_ITEM", item) }

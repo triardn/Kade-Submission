@@ -15,4 +15,6 @@
     <item name="badge_section" type="id" />
     <item name="team_title" type="id" />
     <item name="match_score" type="id" />
+    <item name="club_badge" type="id" />
+    <item name="club_name" type="id" />
 </resources>

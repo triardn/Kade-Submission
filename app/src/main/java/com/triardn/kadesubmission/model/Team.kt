@@ -1,7 +1,10 @@
 package com.triardn.kadesubmission.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Team(
     @SerializedName("idTeam")
     var idTeam: String? = null,
@@ -32,4 +35,4 @@ data class Team(
 
     @SerializedName("strTeamJersey")
     var strTeamJersey: String? = null
-)
+) : Parcelable

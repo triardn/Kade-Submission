@@ -2,22 +2,18 @@ package com.triardn.kadesubmission.adapter
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.CalendarContract.Instances.EVENT_ID
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.triardn.kadesubmission.DetailMatchActivity
-import com.triardn.kadesubmission.MainActivity
 import com.triardn.kadesubmission.R
 import com.triardn.kadesubmission.model.Schedule
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout
-import org.jetbrains.anko.design.tabLayout
 
 class ScheduleAdapter (private val schedules: List<Schedule>) : RecyclerView.Adapter<ScheduleViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
