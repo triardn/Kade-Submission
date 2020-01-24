@@ -23,6 +23,7 @@
         <activity android:name="com.triardn.kadesubmission.DetailMatchActivity"></activity>
         <activity android:name="com.triardn.kadesubmission.SearchActivity"></activity>
         <activity android:name="com.triardn.kadesubmission.DetailTeamActivity"></activity>
+        <activity android:name="com.triardn.kadesubmission.SearchTeamActivity"></activity>
     </application>
 
 </manifest>

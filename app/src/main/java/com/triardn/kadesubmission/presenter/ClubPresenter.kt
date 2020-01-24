@@ -21,4 +21,13 @@ class ClubPresenter(private val view: ClubListView,
             view.showClubList(data.teams)
         }
     }
+
+    fun searchClub(teamName: String?) {
+        GlobalScope.launch(context.main) {
+            val data = gson.fromJson(apiRepository.doRequest(TheSportsDBApi.searchTeam(teamName.orEmpty())).await(),
+                TeamResponse::class.java)
+
+            view.showClubList(data.teams)
+        }
+    }
 }

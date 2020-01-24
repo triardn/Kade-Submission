@@ -1,6 +1,9 @@
 package com.triardn.kadesubmission
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -11,6 +14,7 @@ import com.triardn.kadesubmission.presenter.ClubPresenter
 import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.view.ClubListView
 import kotlinx.android.synthetic.main.activity_club_list.*
+import org.jetbrains.anko.startActivity
 
 class ClubListActivity : AppCompatActivity(), ClubListView {
     private var clubList: MutableList<Team> = mutableListOf()
@@ -41,5 +45,25 @@ class ClubListActivity : AppCompatActivity(), ClubListView {
         clubList.clear()
         clubList.addAll(data)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.team_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_search_team_menu -> {
+                startActivity<SearchTeamActivity>()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
