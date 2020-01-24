@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.triardn.kadesubmission.fragment.FavoriteFragment
 import com.triardn.kadesubmission.fragment.LeagueFragment
+import com.triardn.kadesubmission.fragment.TeamFavoriteFragment
 import com.triardn.kadesubmission.model.Item
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.intentFor
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.favorites -> {
                     loadFavoritesFragment(savedInstanceState)
+                }
+                R.id.team_favorite -> {
+                    loadTeamFavoriteFragment(savedInstanceState)
                 }
             }
             true
@@ -46,6 +50,15 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main_container, FavoriteFragment(), FavoriteFragment::class.java.simpleName)
+                .commit()
+        }
+    }
+
+    private fun loadTeamFavoriteFragment(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, TeamFavoriteFragment(), TeamFavoriteFragment::class.java.simpleName)
                 .commit()
         }
     }

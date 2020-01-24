@@ -70,7 +70,6 @@ class ClubListUI : AnkoComponent<ViewGroup> {
             }
         }
     }
-
 }
 
 class ClubListViewHolder(view: View) : RecyclerView.ViewHolder(view) {

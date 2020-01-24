@@ -7,7 +7,8 @@
     <string name="search_placeholder">man united vs arsenal</string>
     <string name="search_hint">man united vs arsenal</string>
     <string name="leagues">Leagues</string>
-    <string name="favorites">Favourites</string>
+    <string name="favorites">Match Favourites</string>
+    <string name="team_favorites">Team Favourites</string>
     <string-array name="league_name">
         <item>English Premier League</item>
         <item>Spanish La Liga</item>

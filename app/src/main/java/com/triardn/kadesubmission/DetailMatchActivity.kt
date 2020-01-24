@@ -38,7 +38,6 @@ class DetailMatchActivity: AppCompatActivity(), MatchDetailView {
         val bundle = intent.getBundleExtra("Bundle")
         val event = bundle?.getParcelable<Schedule>("match")
 
-        // isFavoriteFlag = isFavorite(event?.idEvent.orEmpty())
         isFavorite(event?.idEvent.orEmpty())
 
         val actionbar = supportActionBar
@@ -372,7 +371,7 @@ class DetailMatchActivity: AppCompatActivity(), MatchDetailView {
                         Favorite.AWAY_TEAM_YELLOW_CARDS to match?.strAwayYellowCards
                     )
                 }
-                Toast.makeText(this, "Added to favorit", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Added to favorite", Toast.LENGTH_SHORT).show()
 
                 return true
             } catch (e: SQLiteConstraintException){
@@ -381,7 +380,7 @@ class DetailMatchActivity: AppCompatActivity(), MatchDetailView {
             }
         }
 
-        Toast.makeText(this, "Wait until data loaded before you add to favorite", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Wait until data loaded before you add it to favorite", Toast.LENGTH_SHORT).show()
 
         return false
     }
