@@ -2,6 +2,7 @@ package com.triardn.kadesubmission.presenter
 
 import com.google.gson.Gson
 import com.triardn.kadesubmission.CoroutineContextProvider
+import com.triardn.kadesubmission.model.Team
 import com.triardn.kadesubmission.model.TeamResponse
 import com.triardn.kadesubmission.repository.ApiRepository
 import com.triardn.kadesubmission.repository.TheSportsDBApi
@@ -15,10 +16,10 @@ class TeamDetailPresenter(private val view: TeamDetailView,
                           private val context: CoroutineContextProvider = CoroutineContextProvider()) {
     fun getTeamDetail(teamID: Int?) {
         GlobalScope.launch(context.main) {
-            val data = gson.fromJson(apiRepository.doRequest(TheSportsDBApi.getTeamDetail(teamID.toString())).await(),
-                TeamResponse::class.java)
-
-            println(data)
+            val data = gson.fromJson(
+                apiRepository.doRequest(TheSportsDBApi.getTeamDetail(teamID.toString())).await(),
+                TeamResponse::class.java
+            )
 
             if (data.teams.isNotEmpty()) {
                 view.getTeamDetail(data.teams[0])

@@ -17,8 +17,8 @@ class DetailTeamActivity : AppCompatActivity(), TeamDetailView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent = intent
-        val team = intent.getParcelableExtra<Team>("team")
+        val intent = intent.getBundleExtra("Bundle")
+        val team = intent?.getParcelable<Team>("team")
 
         val actionBar = supportActionBar
         actionBar?.title = team?.strTeam
