@@ -66,6 +66,13 @@ class DetailLeagueActivity : AppCompatActivity(), DetailView {
                         }
                     }
 
+                    button("Standings") {
+                        onClick {
+                            val intent = Intent(this@with.ctx, StandingsActivity::class.java).apply { putExtra("EXTRA_ITEM", item) }
+                            this@with.ctx.startActivity(intent)
+                        }
+                    }
+
                     textView {
                         text = item.strLeague
                         textSize = sp(10).toFloat()

@@ -17,4 +17,12 @@
     <item name="match_score" type="id" />
     <item name="club_badge" type="id" />
     <item name="club_name" type="id" />
+    <item name="club_match" type="id" />
+    <item name="club_match_win" type="id" />
+    <item name="club_match_loss" type="id" />
+    <item name="club_match_draw" type="id" />
+    <item name="club_point" type="id" />
+    <item name="club_goals" type="id" />
+    <item name="club_conceded" type="id" />
+    <item name="club_goal_diff" type="id" />
 </resources>

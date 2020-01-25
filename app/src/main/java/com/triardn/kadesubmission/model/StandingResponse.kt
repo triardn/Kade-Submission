@@ -1,3 +1,3 @@
 package com.triardn.kadesubmission.model
 
-data class StandingResponse (val standings: List<Standing>)
+data class StandingResponse (val table: List<Standing>)

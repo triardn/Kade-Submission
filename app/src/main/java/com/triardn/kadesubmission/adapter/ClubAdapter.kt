@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.triardn.kadesubmission.DetailTeamActivity
 import com.triardn.kadesubmission.R
+import com.triardn.kadesubmission.model.Standing
 import com.triardn.kadesubmission.model.Team
 import org.jetbrains.anko.*
+import org.w3c.dom.Text
 
 class ClubAdapter (private val clubLists: List<Team>) : RecyclerView.Adapter<ClubListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClubListViewHolder {
@@ -56,8 +58,8 @@ class ClubListUI : AnkoComponent<ViewGroup> {
                 imageView {
                     id = R.id.club_badge
                 }.lparams{
-                    height = dip(50)
-                    width = dip(50)
+                    height = dip(20)
+                    width = dip(20)
                 }
 
                 textView {
@@ -66,7 +68,6 @@ class ClubListUI : AnkoComponent<ViewGroup> {
                 }.lparams{
                     margin = dip(15)
                 }
-
             }
         }
     }
